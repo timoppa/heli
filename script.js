@@ -1,140 +1,79 @@
 const questions = [
-    {
-    "question": "Your company has decided to make a major revision of their API in order to create better experiences for their developers. They need to keep the old version of the API available and deployable, while allowing new customers and testers to try out the new API. They want to keep the same SSL and DNS records in place to serve both APIs.\n\nWhat should they do?",
+  {
+    "question": "For this question, refer to the Helicopter Racing League (HRL) case study. Your team is in charge of creating a payment card data vault for card numbers used to bill tens of thousands of viewers, merchandise consumers, and season ticket holders. You need to implement a custom card tokenization service that meets the following requirements:\n* It must provide low latency at minimal cost.\n* It must be able to identify duplicate credit cards and must not store plaintext card numbers.\n* It should support annual key rotation.\n\nWhich storage approach should you adopt for your tokenization service?",
     "options": [
-      "Configure a new load balancer for the new version of the API",
-      "Reconfigure old clients to use a new endpoint for the new API",
-      "Have the old API forward traffic to the new API based on the path",
-      "Use separate backend pools for each API path behind the load balancer"
+      "Store the card data in Secret Manager after running a query to identify duplicates.",
+      "Encrypt the card data with a deterministic algorithm stored in Firestore using Datastore mode.",
+      "Encrypt the card data with a deterministic algorithm and shard it across multiple Memorystore instances.",
+      "Use column-level encryption to store the data in Cloud SQL."
     ],
     "answer": [
-      "Use separate backend pools for each API path behind the load balancer"
+      "Encrypt the card data with a deterministic algorithm stored in Firestore using Datastore mode."
     ],
     "multiple": false
   },
   {
-    "question": "Your company plans to migrate a multi-petabyte data set to the cloud. The data set must be available 24hrs a day. Your business analysts have experience only with using a SQL interface.\n\nHow should you store the data to optimize it for ease of analysis?",
+    "question": "Question\nFor this question, refer to the Helicopter Racing League (HRL) case study. Recently HRL started a new regional racing league in Cape Town, South Africa. In an effort to give customers in Cape Town a better user experience, HRL has partnered with the Content Delivery Network provider, Fastly. HRL needs to allow traffic coming from all of the Fastly IP address ranges into their Virtual Private Cloud network (VPC network). You are a member of the HRL security team and you need to configure the update that will allow only the Fastly IP address ranges through the External HTTP(S) load balancer. Which command should you use?",
     "options": [
-      "Load data into Google BigQuery",
-      "Insert data into Google Cloud SQL",
-      "Put flat files into Google Cloud Storage",
-      "Stream data into Google Cloud Datastore"
+      "gcloud compute security-policies rules update 1000 \\\n-- security-policy from-fastly \\ \n-- src-ip-ranges * \\\n-- action \"allow\"",
+      "gcloud firewall rules update sourceiplist-fastly \\\n-- priority 1000 \\ \n-- allow tcp:443",
+      "gcloud firewall rules update hlr-policies \\\n-- priority 1000 \\ \n-- target-tags=sourceiplist-fastly \\\n-- allow tcp:443",
+      "gcloud compute security-policies rules update 1000 \\\n-- security-policy hlr-policy \\ \n-- expression \"evaluatePreconfiguredExpr ('sourceiplist-fastly')\" \\\n-- action \"allow\""
     ],
     "answer": [
-      "Load data into Google BigQuery"
+      "gcloud compute security-policies rules update 1000 \\\n-- security-policy from-fastly \\ \n-- src-ip-ranges * \\\n-- action \"allow\""
     ],
     "multiple": false
   },
   {
-    "question": "The operations manager asks you for a list of recommended practices that she should consider when migrating a J2EE application to the cloud.\n\nWhich three practices should you recommend? (Choose three.)",
+    "question": "For this question, refer to the Helicopter Racing League (HRL) case study. The HRL development team releases a new version of their predictive capability application every Tuesday evening at 3 a.m. UTC to a repository. The security team at HRL has developed an in-house penetration test Cloud Function called\nAirwolf. The security team wants to run Airwolf against the predictive capability application as soon as it is released every Tuesday. You need to set up Airwolf to run at the recurring weekly cadence. \n\nWhat should you do?",
     "options": [
-      "Port the application code to run on Google App Engine",
-      "Integrate Cloud Dataflow into the application to capture real-time metrics",
-      "Instrument the application with a monitoring tool like Stackdriver Debugger",
-      "Select an automation framework to reliably provision the cloud infrastructure",
-      "Deploy a continuous integration tool with automated testing in a staging environment",
-      "Migrate from MySQL to a managed NoSQL database like Google Cloud Datastore or Bigtable"
+      "Set up Cloud Tasks and a Cloud Storage bucket that triggers a Cloud Function.",
+      "Set up a Cloud Logging sink and a Cloud Storage bucket that triggers a Cloud Function.",
+      "Configure the deployment job to notify a Pub/Sub queue that triggers a Cloud Function.",
+      "Set up Identity and Access Management (IAM) and Confidential Computing to trigger a Cloud Function."
     ],
     "answer": [
-      "Instrument the application with a monitoring tool like Stackdriver Debugger",
-      "Select an automation framework to reliably provision the cloud infrastructure",
-      "Deploy a continuous integration tool with automated testing in a staging environment"
-    ],
-    "multiple": true
-  },
-  {
-    "question": "A news feed web service has the following code running on Google App Engine. During peak load, users report that they can see news articles they already viewed.\n\nWhat is the most likely cause of this problem?\n\nhttps://www.examtopics.com/assets/media/exam-media/04339/0007100001.png",
-    "options": [
-      "The session variable is local to just a single instance",
-      "The session variable is being overwritten in Cloud Datastore",
-      "The URL of the API needs to be modified to prevent caching",
-      "The HTTP Expires header needs to be set to -1 stop caching"
-    ],
-    "answer": [
-      "The session variable is local to just a single instance"
+      "Configure the deployment job to notify a Pub/Sub queue that triggers a Cloud Function."
     ],
     "multiple": false
   },
   {
-    "question": "An application development team believes their current logging tool will not meet their needs for their new cloud-based product. They want a better tool to capture errors and help them analyze their historical log data. You want to help them find a solution that meets their needs.\n\nWhat should you do?",
+    "question": "Question\nFor this question, refer to the Helicopter Racing League (HRL) case study. HRL wants better prediction accuracy from their ML prediction models. They want you to use Google's AI Platform so HRL can understand and interpret the predictions. \n\nWhat should you do?",
     "options": [
-      "Direct them to download and install the Google StackDriver logging agent",
-      "Send them a list of online resources about logging best practices",
-      "Help them define their requirements and assess viable logging tools",
-      "Help them upgrade their current tool to take advantage of any new features"
+      "Use Explainable AI.",
+      "Use Vision AI.",
+      "Use Google Cloud's operations suite.",
+      "Use Jupyter Notebooks."
     ],
     "answer": [
-      "Direct them to download and install the Google StackDriver logging agent"
+      "Use Explainable AI."
     ],
     "multiple": false
   },
   {
-    "question": "You need to reduce the number of unplanned rollbacks of erroneous production deployments in your company's web hosting platform. Improvement to the QA/Test processes accomplished an 80% reduction.\n\nWhich additional two approaches can you take to further reduce the rollbacks? (Choose two.)",
+    "question": "For this question, refer to the Helicopter Racing League (HRL) case study. HRL is looking for a cost-effective approach for storing their race data such as telemetry. They want to keep all historical records, train models using only the previous season's data, and plan for data growth in terms of volume and information collected. You need to propose a data solution. \n\nConsidering HRL business requirements and the goals expressed by CEO S. Hawke, what should you do?",
     "options": [
-      "Introduce a green-blue deployment model",
-      "Replace the QA environment with canary releases",
-      "Fragment the monolithic platform into microservices",
-      "Reduce the platform's dependency on relational database systems",
-      "Replace the platform's relational database systems with a NoSQL database"
+      "Use Firestore for its scalable and flexible document-based database. Use collections to aggregate race data by season and event.",
+      "Use Cloud Spanner for its scalability and ability to version schemas with zero downtime. Split race data using season as a primary key.",
+      "Use BigQuery for its scalability and ability to add columns to a schema. Partition race data based on season.",
+      "Use Cloud SQL for its ability to automatically manage storage increases and compatibility with MySQL. Use separate database instances for each season."
     ],
     "answer": [
-      "Introduce a green-blue deployment model",
-      "Fragment the monolithic platform into microservices"
-    ],
-    "multiple": true
-  },
-  {
-    "question": "To reduce costs, the Director of Engineering has required all developers to move their development infrastructure resources from on-premises virtual machines (VMs) to Google Cloud Platform. These resources go through multiple start/stop events during the day and require state to persist. You have been asked to design the process of running a development environment in Google Cloud while providing cost visibility to the finance department.\n\nWhich two steps should you take? (Choose two.)",
-    "options": [
-      "Use the - -no-auto-delete flag on all persistent disks and stop the VM",
-      "Use the - -auto-delete flag on all persistent disks and terminate the VM",
-      "Apply VM CPU utilization label and include it in the BigQuery billing export",
-      "Use Google BigQuery billing export and labels to associate cost to groups",
-      "Store all state into local SSD, snapshot the persistent disks, and terminate the VM",
-      "Store all state in Google Cloud Storage, snapshot the persistent disks, and terminate the VM"
-    ],
-    "answer": [
-      "Use the - -no-auto-delete flag on all persistent disks and stop the VM",
-      "Use Google BigQuery billing export and labels to associate cost to groups"
-    ],
-    "multiple": true
-  },
-  {
-    "question": "Your company wants to track whether someone is present in a meeting room reserved for a scheduled meeting. There are 1000 meeting rooms across 5 offices on 3 continents. Each room is equipped with a motion sensor that reports its status every second. The data from the motion detector includes only a sensor ID and several different discrete items of information. Analysts will use this data, together with information about account owners and office locations.\n\nWhich database type should you use?",
-    "options": [
-      "Flat file",
-      "NoSQL",
-      "Relational",
-      "Blobstore"
-    ],
-    "answer": [
-      "NoSQL"
+      "Use BigQuery for its scalability and ability to add columns to a schema. Partition race data based on season."
     ],
     "multiple": false
   },
   {
-    "question": "You set up an autoscaling instance group to serve web traffic for an upcoming launch. After configuring the instance group as a backend service to an HTTP(S) load balancer, you notice that virtual machine (VM) instances are being terminated and re-launched every minute. The instances do not have a public IP address.\n\nYou have verified the appropriate web response is coming from each instance using the curl command. You want to ensure the backend is configured correctly.\n\nWhat should you do?",
+    "question": "For this question, refer to the Helicopter Racing League (HRL) case study. A recent finance audit of cloud infrastructure noted an exceptionally high number of\nCompute Engine instances are allocated to do video encoding and transcoding. You suspect that these Virtual Machines are zombie machines that were not deleted after their workloads completed. You need to quickly get a list of which VM instances are idle. \n\nWhat should you do?",
     "options": [
-      "Ensure that a firewall rules exists to allow source traffic on HTTP/HTTPS to reach the load balancer.",
-      "Assign a public IP to each instance and configure a firewall rule to allow the load balancer to reach the instance public IP.",
-      "Ensure that a firewall rule exists to allow load balancer health checks to reach the instances in the instance group.",
-      "Create a tag on each instance with the name of the load balancer. Configure a firewall rule with the name of the load balancer as the source and the instance tag as the destination."
+      "Log into each Compute Engine instance and collect disk, CPU, memory, and network usage statistics for analysis.",
+      "Use the gcloud compute instances list to list the virtual machine instances that have the idle: true label set.",
+      "Use the gcloud recommender command to list the idle virtual machine instances.",
+      "From the Google Console, identify which Compute Engine instances in the managed instance groups are no longer responding to health check probes."
     ],
     "answer": [
-      "Ensure that a firewall rule exists to allow load balancer health checks to reach the instances in the instance group."
-    ],
-    "multiple": false
-  },
-  {
-    "question": "You write a Python script to connect to Google BigQuery from a Google Compute Engine virtual machine. The script is printing errors that it cannot connect to\nBigQuery.\n\nWhat should you do to fix the script?",
-    "options": [
-      "Install the latest BigQuery API client library for Python",
-      "Run your script on a new virtual machine with the BigQuery access scope enabled",
-      "Create a new service account with BigQuery access and execute your script with that user",
-      "Install the bq component for gcloud with the command gcloud components install bq."
-    ],
-    "answer": [
-      "Create a new service account with BigQuery access and execute your script with that user"
+      "Use the gcloud recommender command to list the idle virtual machine instances."
     ],
     "multiple": false
   },
@@ -163,7 +102,7 @@ function shuffleArray(arr) {
 function updateProgress() {
   const progressPercent = ((currentQuestion) / questions.length) * 100;
   document.getElementById('progressBar').style.width = `${progressPercent}%`;
-  document.getElementById('progressText').textContent = `Question ${currentQuestion + 1}`;
+  document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
 function loadQuestion() {
