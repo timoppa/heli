@@ -95,6 +95,9 @@ const finishBtn = document.getElementById('finishTestBtn');
 
 
 
+
+
+
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
@@ -198,6 +201,12 @@ let countdownInterval = setInterval(() => {
 updateTimerDisplay(); // show initial value
 
 
+function normalize(str) {
+  return str
+    .replace(/\s+/g, ' ')         // convert multiple spaces/newlines/tabs to one space
+    .replace(/\s*\\\s*/g, ' \\ ') // ensure spacing around backslashes is consistent
+    .trim();                      // remove leading/trailing whitespace
+}
 
 nextBtn.addEventListener("click", () => {
   const currentQ = questions[currentQuestion];
@@ -207,13 +216,11 @@ nextBtn.addEventListener("click", () => {
   if (!showingFeedback) {
     if (selectedInputs.length === 0) return alert("Please select at least one option.");
 
-    function normalize(str) {
-      return str.replace(/\s+/g, ' ').trim(); // collapse all whitespace
-    }
-    
     const selectedValues = selectedInputs.map(input => normalize(input.value));
     const isCorrect = correctAnswers.length === selectedValues.length &&
-                      correctAnswers.every(ans => selectedValues.includes(normalize(ans)));
+      correctAnswers.every(ans => selectedValues.some(sel => normalize(sel) === normalize(ans)));
+
+    
 
     // Disable all inputs
     document.querySelectorAll("input[name='option']").forEach(input => input.disabled = true);
