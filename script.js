@@ -207,9 +207,13 @@ nextBtn.addEventListener("click", () => {
   if (!showingFeedback) {
     if (selectedInputs.length === 0) return alert("Please select at least one option.");
 
-    const selectedValues = selectedInputs.map(input => input.value);
+    function normalize(str) {
+      return str.replace(/\s+/g, ' ').trim(); // collapse all whitespace
+    }
+    
+    const selectedValues = selectedInputs.map(input => normalize(input.value));
     const isCorrect = correctAnswers.length === selectedValues.length &&
-                      correctAnswers.every(ans => selectedValues.includes(ans));
+                      correctAnswers.every(ans => selectedValues.includes(normalize(ans)));
 
     // Disable all inputs
     document.querySelectorAll("input[name='option']").forEach(input => input.disabled = true);
