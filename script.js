@@ -372,8 +372,6 @@ function showResult() {
     document.getElementById("quiz").style.display = "block";
     document.getElementById("finalResult").style.display = "none";
     loadQuestion();
-    finishBtn.addEventListener('click', () => {
-    showResult();
 });
   });
 }
