@@ -91,6 +91,7 @@ let showingFeedback   = false;
 let quizStartTime     = new Date();
 let totalTimeSeconds  = 90 * 60;
 let countdownInterval = null;
+let userAnswers = [];
 
 const questionEl = document.getElementById("question");
 const optionsEl  = document.getElementById("options");
@@ -205,6 +206,14 @@ nextBtn.addEventListener("click", () => {
       selectedNorm.length === correctNorm.length &&
       correctNorm.every(ans => selectedNorm.includes(ans));
 
+    const selectedRaw = selectedInputs.map(input => input.value); // preserve original formatting
+      userAnswers[currentQuestion] = {
+        selected: selectedRaw,
+        correct: currentQ.answer,
+        question: currentQ.question
+      };
+
+
     // Disable & highlight in one pass
     optionsEl.querySelectorAll("input[name='option']").forEach(input => {
       input.disabled = true;
@@ -292,7 +301,11 @@ function displayScoreHistory() {
           </tr>`).join("")}
       </tbody>
     </table>
-    <button id="clearHistoryBtn" style="margin-top:10px;">Clear History</button>
+    
+    <div style="margin-top: 10px;">
+      <button id="clearHistoryBtn">Clear History</button>
+      <button id="restartFromHistoryBtn" style="margin-left: 10px;">Restart Quiz</button>
+    </div>
     <hr>
   `;
   container.insertBefore(div, document.getElementById("quiz"));
@@ -303,6 +316,36 @@ function displayScoreHistory() {
       displayScoreHistory();
     }
   });
+
+  document.getElementById('restartFromHistoryBtn').addEventListener('click', () => {
+    if (confirm("Do you want to restart the quiz?")) {
+      // Reset quiz state
+      score = 0;
+      currentQuestion = 0;
+      showingFeedback = false;
+      quizStartTime = new Date();
+  
+      // Reset timer
+      clearInterval(countdownInterval);
+      totalTimeSeconds = 90 * 60; // reset to your default duration
+      updateTimerDisplay();
+      startTimer();
+
+      // Hide score history section
+      const historySection = document.getElementById("scoreHistory");
+      if (historySection) historySection.style.display = "none";
+  
+      // Shuffle and reload quiz
+      questions.sort(() => Math.random() - 0.5);
+      document.getElementById("quiz").style.display = "block";
+      document.getElementById("finalResult").style.display = "none";
+      const summary = document.getElementById("summaryPage");
+      if (summary) summary.style.display = "none";
+  
+      loadQuestion();
+    }
+  });
+
 }
 
 
@@ -338,6 +381,33 @@ function showResult() {
     document.getElementById("finalResult").style.display = "none";
     loadQuestion();
   });
+
+  const summaryDiv = document.getElementById("summaryPage");
+    summaryDiv.innerHTML = "<h3>Question Summary</h3>";
+    
+    userAnswers.forEach((entry, index) => {
+      const isCorrect = 
+        entry.selected.length === entry.correct.length &&
+        entry.correct.every(ans => entry.selected.includes(ans));
+    
+      const questionHTML = `
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 12px;">
+          <p><strong>Q${index + 1}:</strong> ${entry.question}</p>
+          <p><strong>Your Answer:</strong><br>${entry.selected.join("<br>")}</p>
+          <p><strong>Correct Answer:</strong><br>${entry.correct.join("<br>")}</p>
+          <p>${isCorrect ? "✅ Correct" : "❌ Incorrect"}</p>
+        </div>
+      `;
+    
+      summaryDiv.innerHTML += questionHTML;
+    });
+    
+    // Hide quiz and show summary
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("finalResult").style.display = "block";
+    document.getElementById("scoreHistory").style.display = "block";
+    summaryDiv.style.display = "block";
+
 }
 
 
